@@ -1,0 +1,1326 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Analytics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "chart.js": "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>SEO Dashboard</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Search domains, keywords...">
+                <button class="search-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="active"><a href="#overview"><span class="icon">📊</span> Overview</a></li>
+                    <li><a href="#seo-analytics"><span class="icon">🔍</span> SEO Analytics</a></li>
+                    <li><a href="#business-intelligence"><span class="icon">📈</span> BI Metrics</a></li>
+                    <li><a href="#competitor-analysis"><span class="icon">🏆</span> Competitor Analysis</a></li>
+                    <li><a href="#content-performance"><span class="icon">📝</span> Content Performance</a></li>
+                    <li><a href="#roi-insights"><span class="icon">💰</span> ROI & Revenue</a></li>
+                    <li><a href="#trend-forecasting"><span class="icon">🔮</span> Trend Forecasting</a></li>
+                    <li><a href="#settings"><span class="icon">⚙️</span> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <span>Light</span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Dark</span>
+                </div>
+                <div class="user-info">
+                    <div class="avatar">JD</div>
+                    <div class="user-details">
+                        <div class="user-name">John Doe</div>
+                        <div class="user-role">Admin</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="date-range-selector">
+                    <select id="date-range">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="ytd">Year to date</option>
+                        <option value="custom">Custom range</option>
+                    </select>
+                </div>
+                <div class="actions">
+                    <button class="refresh-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20.49 9C19.9828 7.56678 19.1209 6.2854 17.9845 5.27542C16.8482 4.26543 15.4745 3.55976 13.9917 3.22426C12.5089 2.88875 10.9652 2.93434 9.50481 3.35677C8.04437 3.77921 6.71475 4.56471 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4353 15.9556 20.2208 14.4952 20.6432C13.0348 21.0657 11.4911 21.1112 10.0083 20.7757C8.52547 20.4402 7.1518 19.7346 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Refresh
+                </button>
+                <button class="export-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Export Report
+                </button>
+            </div>
+        </header>
+
+        <section id="overview" class="dashboard-section">
+            <h2 class="section-title">Dashboard Overview</h2>
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-title">Organic Traffic</div>
+                    <div class="kpi-value">24,853</div>
+                    <div class="kpi-change positive">+12.5%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Avg. Position</div>
+                    <div class="kpi-value">14.2</div>
+                    <div class="kpi-change negative">-2.1%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Conversions</div>
+                    <div class="kpi-value">1,245</div>
+                    <div class="kpi-change positive">+8.7%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">SEO Revenue</div>
+                    <div class="kpi-value">$52,489</div>
+                    <div class="kpi-change positive">+15.3%</div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3 class="chart-title">Organic Search Performance</h3>
+                    <div class="chart-filters">
+                        <button class="active">Clicks</button>
+                        <button>Impressions</button>
+                        <button>CTR</button>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="organic-performance-chart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Keyword Rankings</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="keyword-rankings-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="seo-analytics" class="dashboard-section">
+            <h2 class="section-title">SEO Analytics</h2>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="organic-traffic">Organic Traffic</button>
+                    <button class="tab-btn" data-tab="technical-seo">Technical SEO</button>
+                    <button class="tab-btn" data-tab="backlink-analysis">Backlink Analysis</button>
+                    <button class="tab-btn" data-tab="local-seo">Local SEO</button>
+                    <button class="tab-btn" data-tab="content-analysis">Content Analysis</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="organic-traffic" class="tab-pane active">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Google Search Console Data</h4>
+                                <div class="metric-chart">
+                                    <canvas id="gsc-data-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Top Keywords</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Keyword</th>
+                                                <th>Rank</th>
+                                                <th>Change</th>
+                                                <th>Volume</th>
+                                                <th>CPC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>seo analytics dashboard</td>
+                                                <td>3</td>
+                                                <td class="positive">+2</td>
+                                                <td>2,400</td>
+                                                <td>$4.20</td>
+                                            </tr>
+                                            <tr>
+                                                <td>seo metrics tracking</td>
+                                                <td>5</td>
+                                                <td class="negative">-1</td>
+                                                <td>1,900</td>
+                                                <td>$3.85</td>
+                                            </tr>
+                                            <tr>
+                                                <td>keyword ranking tool</td>
+                                                <td>8</td>
+                                                <td class="positive">+5</td>
+                                                <td>3,200</td>
+                                                <td>$5.10</td>
+                                            </tr>
+                                            <tr>
+                                                <td>seo performance dashboard</td>
+                                                <td>12</td>
+                                                <td class="positive">+3</td>
+                                                <td>1,400</td>
+                                                <td>$3.75</td>
+                                            </tr>
+                                            <tr>
+                                                <td>analytics reporting seo</td>
+                                                <td>18</td>
+                                                <td class="negative">-2</td>
+                                                <td>980</td>
+                                                <td>$2.95</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="technical-seo" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Core Web Vitals</h4>
+                                <div class="web-vitals">
+                                    <div class="vital-metric good">
+                                        <div class="vital-name">LCP (Largest Contentful Paint)</div>
+                                        <div class="vital-value">2.1s</div>
+                                        <div class="vital-description">Time to load the largest content element</div>
+                                        <div class="vital-gauge">
+                                            <div class="gauge-fill" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="vital-metric good">
+                                        <div class="vital-name">FID (First Input Delay)</div>
+                                        <div class="vital-value">18ms</div>
+                                        <div class="vital-description">Time before browser responds to user interaction</div>
+                                        <div class="vital-gauge">
+                                            <div class="gauge-fill" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="vital-metric needs-improvement">
+                                        <div class="vital-name">CLS (Cumulative Layout Shift)</div>
+                                        <div class="vital-value">0.14</div>
+                                        <div class="vital-description">Measure of visual stability</div>
+                                        <div class="vital-gauge">
+                                            <div class="gauge-fill" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="vital-metric good">
+                                        <div class="vital-name">INP (Interaction to Next Paint)</div>
+                                        <div class="vital-value">182ms</div>
+                                        <div class="vital-description">Responsiveness to user interactions</div>
+                                        <div class="vital-gauge">
+                                            <div class="gauge-fill" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Crawl Errors & Issues</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Issue Type</th>
+                                                <th>Count</th>
+                                                <th>Severity</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>404 Errors</td>
+                                                <td>12</td>
+                                                <td class="severity high">High</td>
+                                                <td><button class="action-btn">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Redirect Chains</td>
+                                                <td>8</td>
+                                                <td class="severity medium">Medium</td>
+                                                <td><button class="action-btn">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pages Not Indexed</td>
+                                                <td>5</td>
+                                                <td class="severity high">High</td>
+                                                <td><button class="action-btn">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Canonicalization Issues</td>
+                                                <td>3</td>
+                                                <td class="severity medium">Medium</td>
+                                                <td><button class="action-btn">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Missing Meta Descriptions</td>
+                                                <td>21</td>
+                                                <td class="severity low">Low</td>
+                                                <td><button class="action-btn">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Broken Internal Links</td>
+                                                <td>7</td>
+                                                <td class="severity high">High</td>
+                                                <td><button class="action-btn">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Duplicate Title Tags</td>
+                                                <td>4</td>
+                                                <td class="severity medium">Medium</td>
+                                                <td><button class="action-btn">View</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="backlink-analysis" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Backlink Overview</h4>
+                                <div class="backlink-metrics">
+                                    <div class="backlink-metric">
+                                        <div class="metric-value">2,456</div>
+                                        <div class="metric-label">Total Backlinks</div>
+                                        <div class="metric-change positive">+123 this month</div>
+                                    </div>
+                                    <div class="backlink-metric">
+                                        <div class="metric-value">342</div>
+                                        <div class="metric-label">Referring Domains</div>
+                                        <div class="metric-change positive">+18 this month</div>
+                                    </div>
+                                    <div class="backlink-metric">
+                                        <div class="metric-value">68</div>
+                                        <div class="metric-label">Authority Score</div>
+                                        <div class="metric-change positive">+3 this month</div>
+                                    </div>
+                                </div>
+                                <div class="metric-chart">
+                                    <canvas id="backlinks-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Top Referring Domains</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Domain</th>
+                                                <th>Links</th>
+                                                <th>Authority</th>
+                                                <th>Type</th>
+                                                <th>First Seen</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>example.com</td>
+                                                <td>32</td>
+                                                <td>89</td>
+                                                <td>Dofollow</td>
+                                                <td>2023-06-12</td>
+                                            </tr>
+                                            <tr>
+                                                <td>blog.example.org</td>
+                                                <td>24</td>
+                                                <td>75</td>
+                                                <td>Dofollow</td>
+                                                <td>2023-08-05</td>
+                                            </tr>
+                                            <tr>
+                                                <td>news.example.net</td>
+                                                <td>18</td>
+                                                <td>82</td>
+                                                <td>Dofollow</td>
+                                                <td>2023-05-22</td>
+                                            </tr>
+                                            <tr>
+                                                <td>reference.example.io</td>
+                                                <td>12</td>
+                                                <td>68</td>
+                                                <td>Nofollow</td>
+                                                <td>2023-09-14</td>
+                                            </tr>
+                                            <tr>
+                                                <td>directory.example.com</td>
+                                                <td>9</td>
+                                                <td>62</td>
+                                                <td>Dofollow</td>
+                                                <td>2023-07-30</td>
+                                            </tr>
+                                            <tr>
+                                                <td>reviews.example.org</td>
+                                                <td>8</td>
+                                                <td>71</td>
+                                                <td>Dofollow</td>
+                                                <td>2023-10-02</td>
+                                            </tr>
+                                            <tr>
+                                                <td>industry.example.net</td>
+                                                <td>6</td>
+                                                <td>64</td>
+                                                <td>Dofollow</td>
+                                                <td>2023-09-18</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="local-seo" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Google Business Profile Performance</h4>
+                                <p>Connect your Google Business Profile to view data</p>
+                                <button class="action-btn">Connect GBP</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="content-analysis" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Content Performance</h4>
+                                <p>Connect your website to analyze content performance</p>
+                                <button class="action-btn">Connect Website</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="business-intelligence" class="dashboard-section">
+            <h2 class="section-title">Business Intelligence Metrics</h2>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="revenue-insights">Revenue Insights</button>
+                    <button class="tab-btn" data-tab="user-behavior">User Behavior</button>
+                    <button class="tab-btn" data-tab="customer-journey">Customer Journey</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="revenue-insights" class="tab-pane active">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>SEO Revenue Impact</h4>
+                                <div class="kpi-cards">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Organic Revenue</div>
+                                        <div class="kpi-value">$124,853</div>
+                                        <div class="kpi-change positive">+18.3%</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Assisted Conversions</div>
+                                        <div class="kpi-value">3,214</div>
+                                        <div class="kpi-change positive">+9.8%</div>
+                                    </div>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <canvas id="revenue-trend-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Lead Generation Performance</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Channel</th>
+                                                <th>New Users</th>
+                                                <th>Return Users</th>
+                                                <th>Leads</th>
+                                                <th>Conv Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Organic Search</td>
+                                                <td>14,380</td>
+                                                <td>3,254</td>
+                                                <td>842</td>
+                                                <td>4.8%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Direct</td>
+                                                <td>6,921</td>
+                                                <td>2,842</td>
+                                                <td>415</td>
+                                                <td>4.2%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Referral</td>
+                                                <td>4,513</td>
+                                                <td>1,247</td>
+                                                <td>328</td>
+                                                <td>5.7%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Social</td>
+                                                <td>3,872</td>
+                                                <td>951</td>
+                                                <td>142</td>
+                                                <td>2.9%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>2,143</td>
+                                                <td>1,528</td>
+                                                <td>214</td>
+                                                <td>5.8%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="user-behavior" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Top Performing Content</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Page Title</th>
+                                                <th>Pageviews</th>
+                                                <th>Avg Time</th>
+                                                <th>Conv Rate</th>
+                                                <th>Bounce Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Ultimate SEO Guide 2023</td>
+                                                <td>12,483</td>
+                                                <td>4:32</td>
+                                                <td>6.2%</td>
+                                                <td>32%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>How to Optimize Content</td>
+                                                <td>8,754</td>
+                                                <td>3:18</td>
+                                                <td>5.4%</td>
+                                                <td>38%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Backlink Strategy Guide</td>
+                                                <td>7,245</td>
+                                                <td>5:21</td>
+                                                <td>7.1%</td>
+                                                <td>29%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Technical SEO Checklist</td>
+                                                <td>6,832</td>
+                                                <td>2:59</td>
+                                                <td>4.8%</td>
+                                                <td>41%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Landing Page Templates</td>
+                                                <td>5,421</td>
+                                                <td>2:24</td>
+                                                <td>8.3%</td>
+                                                <td>35%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>User Engagement</h4>
+                                <div id="heatmap-placeholder" style="height: 300px; background-color: var(--light-gray); display: flex; justify-content: center; align-items: center;">
+                                    <p>Heatmap visualization will be displayed here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="customer-journey" class="tab-pane">
+                        <div class="metric-card">
+                            <h4>Customer Journey Flow</h4>
+                            <div id="journey-flow-placeholder" style="height: 400px; background-color: var(--light-gray); display: flex; justify-content: center; align-items: center;">
+                                <p>Customer journey flow visualization will be displayed here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competitor-analysis" class="dashboard-section">
+            <h2 class="section-title">Competitor Analysis</h2>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <h4>Keyword Gap Analysis</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="keyword-gap-chart"></canvas>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Traffic Share vs. Competitors</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="traffic-share-chart"></canvas>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Backlink Comparison</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="backlink-comparison-chart"></canvas>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Content Performance Benchmarking</h4>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Your Rank</th>
+                                    <th>Competitor A</th>
+                                    <th>Competitor B</th>
+                                    <th>Competitor C</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SEO Analytics</td>
+                                    <td>3</td>
+                                    <td>5</td>
+                                    <td>1</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>Keyword Research</td>
+                                    <td>2</td>
+                                    <td>4</td>
+                                    <td>7</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>Link Building</td>
+                                    <td>6</td>
+                                    <td>2</td>
+                                    <td>5</td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <td>Technical SEO</td>
+                                    <td>4</td>
+                                    <td>1</td>
+                                    <td>8</td>
+                                    <td>6</td>
+                                </tr>
+                                <tr>
+                                    <td>Content Strategy</td>
+                                    <td>1</td>
+                                    <td>3</td>
+                                    <td>2</td>
+                                    <td>7</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="content-performance" class="dashboard-section">
+            <h2 class="section-title">Content Performance</h2>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="content-clusters">Content Clusters</button>
+                    <button class="tab-btn" data-tab="search-intent">Search Intent</button>
+                    <button class="tab-btn" data-tab="serp-features">SERP Features</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="content-clusters" class="tab-pane active">
+                        <div class="metric-card">
+                            <h4>Content Topic Clusters</h4>
+                            <div id="content-cluster-visualization" style="height: 400px; background-color: var(--light-gray); display: flex; justify-content: center; align-items: center;">
+                                <p>Topic cluster visualization will be displayed here</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="search-intent" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Search Intent Analysis</h4>
+                                <div class="chart-wrapper">
+                                    <canvas id="search-intent-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Top Keywords by Intent</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Keyword</th>
+                                                <th>Intent</th>
+                                                <th>Volume</th>
+                                                <th>Rank</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>what is seo</td>
+                                                <td>Informational</td>
+                                                <td>12,500</td>
+                                                <td>4</td>
+                                                <td><button class="action-btn">Optimize</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>seo tools</td>
+                                                <td>Commercial</td>
+                                                <td>8,300</td>
+                                                <td>7</td>
+                                                <td><button class="action-btn">Optimize</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>buy seo software</td>
+                                                <td>Transactional</td>
+                                                <td>3,200</td>
+                                                <td>3</td>
+                                                <td><button class="action-btn">Optimize</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>seo analytics login</td>
+                                                <td>Navigational</td>
+                                                <td>2,800</td>
+                                                <td>1</td>
+                                                <td><button class="action-btn">Optimize</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>how to analyze seo</td>
+                                                <td>Informational</td>
+                                                <td>5,700</td>
+                                                <td>8</td>
+                                                <td><button class="action-btn">Optimize</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="serp-features" class="tab-pane">
+                        <div class="metric-card">
+                            <h4>SERP Feature Tracking</h4>
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Keyword</th>
+                                            <th>Featured Snippet</th>
+                                            <th>People Also Ask</th>
+                                            <th>Knowledge Panel</th>
+                                            <th>Your Position</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>seo analytics dashboard</td>
+                                            <td>Yes (You)</td>
+                                            <td>Yes</td>
+                                            <td>No</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>how to track seo</td>
+                                            <td>Yes (Competitor)</td>
+                                            <td>Yes</td>
+                                            <td>No</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>seo metrics</td>
+                                            <td>No</td>
+                                            <td>Yes</td>
+                                            <td>No</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td>best seo analytics tools</td>
+                                            <td>No</td>
+                                            <td>Yes</td>
+                                            <td>No</td>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                            <td>google seo analysis</td>
+                                            <td>No</td>
+                                            <td>Yes</td>
+                                            <td>Yes</td>
+                                            <td>8</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roi-insights" class="dashboard-section">
+            <h2 class="section-title">ROI & Revenue</h2>
+            
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-title">SEO ROI</div>
+                    <div class="kpi-value">572%</div>
+                    <div class="kpi-change positive">+24.3%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">CAC</div>
+                    <div class="kpi-value">$42.18</div>
+                    <div class="kpi-change positive">-8.2%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">LTV</div>
+                    <div class="kpi-value">$1,245</div>
+                    <div class="kpi-change positive">+5.7%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Conversion Rate</div>
+                    <div class="kpi-value">3.8%</div>
+                    <div class="kpi-change positive">+0.5%</div>
+                </div>
+            </div>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <h4>Revenue Attribution by Channel</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="revenue-attribution-chart"></canvas>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>SEO Investment vs Return</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="investment-return-chart"></canvas>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Top Converting Keywords</h4>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Keyword</th>
+                                    <th>Traffic</th>
+                                    <th>Conversions</th>
+                                    <th>Conv Rate</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>seo dashboard software</td>
+                                    <td>1,245</td>
+                                    <td>87</td>
+                                    <td>7.0%</td>
+                                    <td>$12,180</td>
+                                </tr>
+                                <tr>
+                                    <td>enterprise seo platform</td>
+                                    <td>842</td>
+                                    <td>52</td>
+                                    <td>6.2%</td>
+                                    <td>$15,600</td>
+                                </tr>
+                                <tr>
+                                    <td>seo analytics tool</td>
+                                    <td>1,652</td>
+                                    <td>75</td>
+                                    <td>4.5%</td>
+                                    <td>$9,375</td>
+                                </tr>
+                                <tr>
+                                    <td>seo reporting software</td>
+                                    <td>978</td>
+                                    <td>42</td>
+                                    <td>4.3%</td>
+                                    <td>$5,460</td>
+                                </tr>
+                                <tr>
+                                    <td>best seo monitoring</td>
+                                    <td>754</td>
+                                    <td>38</td>
+                                    <td>5.0%</td>
+                                    <td>$4,940</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Monthly Revenue Forecast</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="revenue-forecast-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trend-forecasting" class="dashboard-section">
+            <h2 class="section-title">Trend Forecasting</h2>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <h4>Search Volume Prediction</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="search-volume-prediction-chart"></canvas>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Seasonality Insights</h4>
+                    <div id="seasonality-heatmap" style="height: 300px; background-color: var(--light-gray); display: flex; justify-content: center; align-items: center;">
+                        <p>Seasonality heatmap will be displayed here</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Emerging Keywords</h4>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Keyword</th>
+                                    <th>Growth</th>
+                                    <th>Volume</th>
+                                    <th>Competition</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ai seo optimization</td>
+                                    <td class="positive">+142%</td>
+                                    <td>2,400</td>
+                                    <td>Medium</td>
+                                    <td><button class="action-btn">Target</button></td>
+                                </tr>
+                                <tr>
+                                    <td>semantic search analysis</td>
+                                    <td class="positive">+98%</td>
+                                    <td>1,800</td>
+                                    <td>Low</td>
+                                    <td><button class="action-btn">Target</button></td>
+                                </tr>
+                                <tr>
+                                    <td>voice search optimization</td>
+                                    <td class="positive">+87%</td>
+                                    <td>3,200</td>
+                                    <td>Medium</td>
+                                    <td><button class="action-btn">Target</button></td>
+                                </tr>
+                                <tr>
+                                    <td>e-e-a-t seo</td>
+                                    <td class="positive">+76%</td>
+                                    <td>1,200</td>
+                                    <td>Low</td>
+                                    <td><button class="action-btn">Target</button></td>
+                                </tr>
+                                <tr>
+                                    <td>generative ai content seo</td>
+                                    <td class="positive">+68%</td>
+                                    <td>1,900</td>
+                                    <td>High</td>
+                                    <td><button class="action-btn">Target</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <h4>Traffic Forecast (Next 6 Months)</h4>
+                    <div class="chart-wrapper">
+                        <canvas id="traffic-forecast-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="settings" class="dashboard-section">
+            <h2 class="section-title">Settings & Customization</h2>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="dashboard-settings">Dashboard Settings</button>
+                    <button class="tab-btn" data-tab="integrations">Integrations</button>
+                    <button class="tab-btn" data-tab="report-settings">Report Settings</button>
+                    <button class="tab-btn" data-tab="user-management">User Management</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="dashboard-settings" class="tab-pane active">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Dashboard Preferences</h4>
+                                <form class="settings-form">
+                                    <div class="form-group">
+                                        <label>Default Date Range</label>
+                                        <select>
+                                            <option>Last 7 days</option>
+                                            <option selected>Last 30 days</option>
+                                            <option>Last 90 days</option>
+                                            <option>Year to date</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Default Theme</label>
+                                        <select>
+                                            <option selected>Light</option>
+                                            <option>Dark</option>
+                                            <option>System Default</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Default View</label>
+                                        <select>
+                                            <option selected>Overview</option>
+                                            <option>SEO Analytics</option>
+                                            <option>BI Metrics</option>
+                                        </select>
+                                    </div>
+                                    <button class="action-btn">Save Preferences</button>
+                                </form>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Widget Management</h4>
+                                <p>Drag and drop widgets to customize your dashboard layout</p>
+                                <div id="widget-management-placeholder" style="height: 200px; background-color: var(--light-gray); display: flex; justify-content: center; align-items: center;">
+                                    <p>Widget management interface will be displayed here</p>
+                                </div>
+                                <button class="action-btn">Save Layout</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="integrations" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Connected Services</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Service</th>
+                                                <th>Status</th>
+                                                <th>Last Sync</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Google Analytics</td>
+                                                <td class="positive">Connected</td>
+                                                <td>10 mins ago</td>
+                                                <td><button class="action-btn">Manage</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Google Search Console</td>
+                                                <td class="positive">Connected</td>
+                                                <td>10 mins ago</td>
+                                                <td><button class="action-btn">Manage</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Google Ads</td>
+                                                <td class="negative">Not Connected</td>
+                                                <td>-</td>
+                                                <td><button class="action-btn">Connect</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ahrefs</td>
+                                                <td class="positive">Connected</td>
+                                                <td>1 hour ago</td>
+                                                <td><button class="action-btn">Manage</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Semrush</td>
+                                                <td class="negative">Not Connected</td>
+                                                <td>-</td>
+                                                <td><button class="action-btn">Connect</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Zapier</td>
+                                                <td class="positive">Connected</td>
+                                                <td>5 hours ago</td>
+                                                <td><button class="action-btn">Manage</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Add New Integration</h4>
+                                <div class="integration-icons" style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                                    <div style="text-align: center; width: 80px;">
+                                        <div style="width: 60px; height: 60px; background-color: var(--light-gray); border-radius: 8px; margin: 0 auto;"></div>
+                                        <p>Moz</p>
+                                    </div>
+                                    <div style="text-align: center; width: 80px;">
+                                        <div style="width: 60px; height: 60px; background-color: var(--light-gray); border-radius: 8px; margin: 0 auto;"></div>
+                                        <p>Majestic</p>
+                                    </div>
+                                    <div style="text-align: center; width: 80px;">
+                                        <div style="width: 60px; height: 60px; background-color: var(--light-gray); border-radius: 8px; margin: 0 auto;"></div>
+                                        <p>Screaming Frog</p>
+                                    </div>
+                                    <div style="text-align: center; width: 80px;">
+                                        <div style="width: 60px; height: 60px; background-color: var(--light-gray); border-radius: 8px; margin: 0 auto;"></div>
+                                        <p>Shopify</p>
+                                    </div>
+                                    <div style="text-align: center; width: 80px;">
+                                        <div style="width: 60px; height: 60px; background-color: var(--light-gray); border-radius: 8px; margin: 0 auto;"></div>
+                                        <p>WordPress</p>
+                                    </div>
+                                    <div style="text-align: center; width: 80px;">
+                                        <div style="width: 60px; height: 60px; background-color: var(--light-gray); border-radius: 8px; margin: 0 auto;"></div>
+                                        <p>Bing</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="report-settings" class="tab-pane">
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>Scheduled Reports</h4>
+                                <div class="data-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Report Name</th>
+                                                <th>Frequency</th>
+                                                <th>Recipients</th>
+                                                <th>Last Sent</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>SEO Weekly Summary</td>
+                                                <td>Weekly (Monday)</td>
+                                                <td>3 recipients</td>
+                                                <td>May 15, 2023</td>
+                                                <td><button class="action-btn">Edit</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Monthly Performance</td>
+                                                <td>Monthly (1st)</td>
+                                                <td>5 recipients</td>
+                                                <td>May 1, 2023</td>
+                                                <td><button class="action-btn">Edit</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Keyword Position Alert</td>
+                                                <td>Daily</td>
+                                                <td>2 recipients</td>
+                                                <td>May 22, 2023</td>
+                                                <td><button class="action-btn">Edit</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button class="action-btn" style="margin-top: 1rem;">Create New Report</button>
+                            </div>
+                            <div class="metric-card">
+                                <h4>Alert Settings</h4>
+                                <form class="settings-form">
+                                    <div class="form-group">
+                                        <label>Ranking Drop Alert</label>
+                                        <select>
+                                            <option>Disabled</option>
+                                            <option>When drops 3+ positions</option>
+                                            <option selected>When drops 5+ positions</option>
+                                            <option>When drops 10+ positions</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Traffic Alert</label>
+                                        <select>
+                                            <option>Disabled</option>
+                                            <option>When drops 10%+</option>
+                                            <option selected>When drops 20%+</option>
+                                            <option>When drops 30%+</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Notification Method</label>
+                                        <div style="display: flex; gap: 10px; align-items: center;">
+                                            <input type="checkbox" checked id="email-notify">
+                                            <label for="email-notify">Email</label>
+                                            <input type="checkbox" checked id="slack-notify">
+                                            <label for="slack-notify">Slack</label>
+                                            <input type="checkbox" id="sms-notify">
+                                            <label for="sms-notify">SMS</label>
+                                        </div>
+                                    </div>
+                                    <button class="action-btn">Save Alert Settings</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="user-management" class="tab-pane">
+                        <div class="metric-card">
+                            <h4>Team Members</h4>
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Last Active</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>John Doe</td>
+                                            <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5afaaadab85a0bda4a8b5a9a0eba6aaa8">[email&#160;protected]</a></td>
+                                            <td>Admin</td>
+                                            <td>Currently active</td>
+                                            <td><button class="action-btn">Manage</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jane Smith</td>
+                                            <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="294348474c694c51484459454c074a4644">[email&#160;protected]</a></td>
+                                            <td>SEO Manager</td>
+                                            <td>2 hours ago</td>
+                                            <td><button class="action-btn">Manage</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Robert Johnson</td>
+                                            <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0d7f626f687f794d68756c607d6168236e6260">[email&#160;protected]</a></td>
+                                            <td>Content Editor</td>
+                                            <td>1 day ago</td>
+                                            <td><button class="action-btn">Manage</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sarah Williams</td>
+                                            <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff8c9e8d9e97bf9a879e928f939ad19c9092">[email&#160;protected]</a></td>
+                                            <td>Analyst</td>
+                                            <td>5 days ago</td>
+                                            <td><button class="action-btn">Manage</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="action-btn" style="margin-top: 1rem;">Invite New User</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-insights" class="dashboard-section">
+            <h2 class="section-title">AI-Powered Insights</h2>
+            <div class="ai-recommendations">
+                <div class="ai-recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="recommendation-icon">🚀</div>
+                        <div class="recommendation-title">Improve Technical SEO</div>
+                    </div>
+                    <div class="recommendation-content">
+                        <p>Your Core Web Vitals are mostly good, but CLS (Cumulative Layout Shift) needs improvement. Consider fixing layout shifts on your mobile homepage.</p>
+                        <div class="recommendation-actions">
+                            <button class="action-btn">View Details</button>
+                            <button class="dismiss-btn">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="recommendation-icon">🔍</div>
+                        <div class="recommendation-title">Keyword Opportunity</div>
+                    </div>
+                    <div class="recommendation-content">
+                        <p>You're ranking #8 for "keyword ranking tool" which has high search volume (3,200/mo). Optimizing this page could bring 840+ monthly visitors.</p>
+                        <div class="recommendation-actions">
+                            <button class="action-btn">View Details</button>
+                            <button class="dismiss-btn">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="recommendation-icon">📈</div>
+                        <div class="recommendation-title">Content Gap</div>
+                    </div>
+                    <div class="recommendation-content">
+                        <p>Your competitor example.com is ranking for 230 keywords that you're not targeting. Our AI analysis suggests creating content around "seo reporting templates".</p>
+                        <div class="recommendation-actions">
+                            <button class="action-btn">View Details</button>
+                            <button class="dismiss-btn">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module" src="app.js"></script>
+</body>
+</html>
